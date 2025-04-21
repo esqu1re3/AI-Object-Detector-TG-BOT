@@ -1,0 +1,20 @@
+{
+    "fasterrcnn": {
+      "name": "Faster R-CNN (ResNet50 FPN)",
+      "description": "Two-stage detector for high-accuracy object localization.",
+      "weights": "fasterrcnn_weights",
+      "load_function": "fasterrcnn_resnet50_fpn"
+    },
+    "retinanet": {
+      "name": "RetinaNet (ResNet50 FPN)",
+      "description": "Single-stage detector with Focal Loss: balanced speed & accuracy.",
+      "weights": "retinanet_weights",
+      "load_function": "retinanet_resnet50_fpn"
+    },
+    "maskrcnn": {
+      "name": "Mask R-CNN (ResNet50 FPN)",
+      "description": "Instance segmentation with bounding boxes and pixel‑wise masks.",
+      "weights": "maskrcnn_weights",
+      "load_function": "maskrcnn_resnet50_fpn"
+    }
+  }

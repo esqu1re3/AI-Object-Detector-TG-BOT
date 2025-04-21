@@ -1,0 +1,5 @@
+telegram_bot_token: "<YOUR_TOKEN>"
+model_config_file: "models_config.json"
+font_path: "comic.ttf"
+bot_polling_timeout: 10
+logging_level: "INFO"
