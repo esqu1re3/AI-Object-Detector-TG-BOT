@@ -6,8 +6,8 @@ An intelligent system that automatically selects the optimal object detection mo
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/ai-object-detection-model-selector.git
-   cd ai-object-detection-model-selector
+   git clone https://github.com/esqu1re3/AI-Object-Detector-TG-BOT.git
+   cd AI-Object-Detector-TG-BOT
    ```
 
 2. **Create & activate a Python virtual environment**
