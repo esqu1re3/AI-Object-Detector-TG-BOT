@@ -27,11 +27,7 @@ An intelligent system that automatically selects the optimal object detection mo
    - Create a new bot via BotFather on Telegram and copy its token.
    - Edit `config/settings.yaml` with the following example:
      ```yaml
-     telegram_bot_token: "<YOUR_TOKEN>"
-     model_config_file: "models_config.json"
-     font_path: "comic.ttf"
-     bot_polling_timeout: 10
-     logging_level: "INFO"
+     telegram_bot_token: "YOUR_TOKEN"
      ```
 
 5. **Run the Telegram bot**
