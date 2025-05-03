@@ -97,7 +97,7 @@ def extract_image_features(image: Image.Image) -> list:
 def draw_boxes(image: Image.Image, boxes, labels, scores, categories, threshold=0.5) -> Image.Image:
     draw = ImageDraw.Draw(image)
     try:
-        font = ImageFont.truetype("comic.ttf", 16)
+        font = ImageFont.truetype("OCR-B.ttf", 16)
     except IOError:
         font = ImageFont.load_default()
     for box, lbl, score in zip(boxes, labels, scores):
