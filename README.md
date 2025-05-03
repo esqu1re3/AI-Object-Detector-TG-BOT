@@ -80,6 +80,7 @@ project-root/
 │
 ├── .gitignore
 ├── bot.py
+├── OCR-B.ttf
 ├── README.md
 └── requirements.txt
 ```
@@ -126,6 +127,7 @@ project-root/
 │
 ├── .gitignore
 ├── bot.py
+├── OCR-B.ttf
 ├── README.md
 └── requirements.txt
 ```
