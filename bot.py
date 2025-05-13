@@ -205,10 +205,22 @@ def handle_photo(message):
     else:
         explanation = "the specific characteristics of your image"
     
+    # Add model-specific context based on the model name/type
+    model_context = ""
+    if "Faster" in model_info["name"]:
+        model_context = "⚡️ Fast and accurate detection"
+    elif "Mask" in model_info["name"]:
+        model_context = "🎯 Precise object boundaries"
+    elif "RetinaNet" in model_info["name"]:
+        model_context = "🔍 Multi-scale detection"
+    
     bot.send_photo(
         chat_id,
         buf,
-        caption=f"Model used: {model_info['name']}\nThis model was selected as the most suitable for images containing {explanation}."
+        caption=f"🤖 Model Selection:\n"
+                f"• Selected: {model_info['name']}\n"
+                f"• Reason: Best suited for images with {explanation}\n"
+                f"• Strengths: {model_context}"
     )
 
 if __name__ == '__main__':
