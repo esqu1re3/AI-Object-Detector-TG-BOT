@@ -2,5 +2,3 @@ venv/
 coco/
 __pycache__/
 .DS_Store
-config/settings.yaml
-.cursorignore
