@@ -127,6 +127,22 @@ def handle_start(message):
         "Please send me a photo, and I will return the image with detected objects and tell you which model I have used."
     )
 
+@bot.message_handler(content_types=["document"])
+def handle_documents(message):
+    if message.document.mime_type.startswith("image/"):
+        bot.send_message(message.chat.id, "⚠️ Please send the image as a photo, not as a file.")
+    else:
+        bot.send_message(message.chat.id, "⚠️ I only work with standard photos sent through the camera.")
+
+@bot.message_handler(func=lambda message: True, content_types=["text", "video", "sticker", "audio", "voice", "video_note", "contact", "location"])
+def handle_invalid_content(message):
+    bot.send_message(
+        message.chat.id,
+        "⚠️ I can only process standard uncompressed photos sent through the 📷 *camera* button or picked from your gallery.\n\n"
+        "Please make sure you are not sending files as documents or media.",
+        parse_mode="Markdown"
+    )
+
 @bot.message_handler(content_types=["photo"])
 @catch_exceptions
 def handle_photo(message):
@@ -134,6 +150,10 @@ def handle_photo(message):
     user_id = message.from_user.id
     username = message.from_user.username or "unknown"
     now = time.time()
+
+    if not message.photo:
+        bot.send_message(chat_id, "⚠️ Please send a standard photo, not a file or screenshot as document.")
+        return
 
     if now - user_last_photo_time[user_id] < PHOTO_COOLDOWN_SECONDS:
         bot.send_message(chat_id, "⏳ Please wait a few seconds before sending another photo.")
