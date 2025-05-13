@@ -214,11 +214,14 @@ def handle_photo(message):
     elif "RetinaNet" in model_info["name"]:
         model_context = "🔍 Multi-scale detection"
     
+    # Simplify model name
+    simple_name = model_info["name"].split(" (")[0]
+    
     bot.send_photo(
         chat_id,
         buf,
         caption=f"🤖 Model Selection:\n"
-                f"• Selected: {model_info['name']}\n"
+                f"• Selected: {simple_name}\n"
                 f"• Reason: Best suited for images with {explanation}\n"
                 f"• Strengths: {model_context}"
     )
