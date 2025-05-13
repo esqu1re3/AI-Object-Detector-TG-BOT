@@ -189,10 +189,23 @@ def handle_photo(message):
     result_img.save(buf, format="JPEG")
     buf.seek(0)
 
+    # Create an explanation based on the image features
+    explanation = ""
+    if feats[0] > 5:  # num_objects is high
+        explanation = "multiple objects"
+    elif feats[1] > 0.4:  # mean_box_area is high
+        explanation = "large objects"
+    elif feats[2] > 5:  # num_categories is high
+        explanation = "diverse object types"
+    elif feats[3] > 1.5:  # ratio_hw is high (portrait image)
+        explanation = "portrait orientation"
+    else:
+        explanation = "the specific characteristics of your image"
+    
     bot.send_photo(
         chat_id,
         buf,
-        caption=f"Model used: {model_info['name']}"
+        caption=f"Model used: {model_info['name']}\nThis model was selected as the most suitable for images containing {explanation}."
     )
 
 if __name__ == '__main__':
