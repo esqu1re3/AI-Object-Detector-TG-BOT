@@ -1,6 +1,5 @@
 import io
 import cv2
-import yaml
 import joblib
 import logging
 import torch
