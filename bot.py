@@ -123,8 +123,11 @@ def draw_boxes(image: Image.Image, boxes, labels, scores, categories, threshold=
 def handle_start(message):
     bot.send_message(
         message.chat.id,
-        "Hello! I can detect objects on your photo using the best pretrained model picked by trained Decision Tree Classifier.\n"
-        "Please send me a photo, and I will return the image with detected objects and tell you which model I have used."
+        "👋 Hello! I can detect objects in your photos using the best pretrained model selected by a trained Decision Tree Classifier.\n\n"
+        "📸 Please send me a photo, and I will return the image with detected objects and tell you which model was used.\n\n"
+        "❗️ Important limitations:\n"
+        "• Object detection may not be perfect and some objects might be missed or incorrectly identified\n"
+        "• The explanation for why a particular model was selected may not always fully reflect the complexity of the decision-making process\n\n"
     )
 
 @bot.message_handler(content_types=["document"])
