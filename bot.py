@@ -7,6 +7,7 @@ import torch
 import numpy as np
 import time
 from pathlib import Path
+from collections import defaultdict
 from PIL import Image, ImageDraw, ImageFont, ImageStat
 from torchvision import transforms
 import telebot
@@ -31,6 +32,9 @@ config_path = BASE_DIR / "config" / "models_config.json"
 
 print(f"Loading selector from: {selector_path}")
 print(f"Loading model config from: {config_path}")
+
+user_last_photo_time = defaultdict(lambda: 0)
+PHOTO_COOLDOWN_SECONDS = 3
 
 selector = joblib.load(selector_path)
 models_available = initialize_models(str(config_path))
@@ -129,14 +133,27 @@ def handle_photo(message):
     chat_id = message.chat.id
     user_id = message.from_user.id
     username = message.from_user.username or "unknown"
+    now = time.time()
+
+    if now - user_last_photo_time[user_id] < PHOTO_COOLDOWN_SECONDS:
+        bot.send_message(chat_id, "⏳ Please wait a few seconds before sending another photo.")
+        return
+
+    user_last_photo_time[user_id] = now
+
     logging.info(f"Photo received from user {user_id} (@{username}) at {time.strftime('%Y-%m-%d %H:%M:%S')}")
-    
-    file_info = bot.get_file(message.photo[-1].file_id)
-    img_bytes = bot.download_file(file_info.file_path)
-    image = Image.open(io.BytesIO(img_bytes)).convert("RGB")
+
+    try:
+        file_info = bot.get_file(message.photo[-1].file_id)
+        img_bytes = bot.download_file(file_info.file_path)
+        image = Image.open(io.BytesIO(img_bytes)).convert("RGB")
+    except Exception as e:
+        bot.send_message(chat_id, "❌ Failed to process the image. Please try again.")
+        logging.error(f"Image processing error: {e}")
+        return
 
     feats = extract_image_features(image)
-    
+
     df_feats = pd.DataFrame([feats], columns=["num_objects", "mean_box_area", "num_categories", "ratio_hw"])
     chosen_key = selector.predict(df_feats)[0]
     model_info = models_available[chosen_key]
