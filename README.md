@@ -25,9 +25,9 @@ An intelligent system that automatically selects the optimal object detection mo
 
 4. **Configure the bot**
    - Create a new bot via BotFather on Telegram and copy its token.
-   - Edit `config/settings.yaml` with the following example:
-     ```yaml
-     telegram_bot_token: "YOUR_TOKEN"
+   - Edit `config/.env` with the following example:
+     ```.env
+     TELEGRAM_BOT_TOKEN="YOUR_TOKEN"
      ```
 
 5. **Run the Telegram bot**
@@ -49,7 +49,7 @@ An intelligent system that automatically selects the optimal object detection mo
 project-root/
 ├── config/
 │   ├── models_config.json
-│   └── settings.yaml
+│   └── .env
 │
 ├── models/
 │   ├── model_selector_dt.joblib
@@ -108,7 +108,7 @@ project-root/
 │
 ├── config/
 │   ├── models_config.json
-│   └── settings.yaml
+│   └── .env
 │
 ├── models/
 │   ├── model_selector_dt.joblib

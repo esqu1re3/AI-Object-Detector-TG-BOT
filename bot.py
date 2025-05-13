@@ -8,30 +8,31 @@ import numpy as np
 import time
 from pathlib import Path
 from collections import defaultdict
-from PIL import Image, ImageDraw, ImageFont, ImageStat
+from PIL import Image, ImageDraw, ImageFont
 from torchvision import transforms
 import telebot
 import pandas as pd
 from src.models_loader import initialize_models
 from src.utils import setup_logging, catch_exceptions
+import os
+from dotenv import load_dotenv
 
 #setting base directory 
 BASE_DIR = Path(__file__).resolve().parent
 
 setup_logging()
 
-settings_path = BASE_DIR / "config" / "settings.yaml"
+settings_path = BASE_DIR / "config" / ".env"
 print(f"Loading settings from: {settings_path}")
-settings = yaml.safe_load(open(settings_path, "r"))
-TOKEN = settings.get("telegram_bot_token")
+load_dotenv(settings_path)
+TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 if not TOKEN:
-    raise ValueError(f"telegram_bot_token is not set in {settings_path}")
+    raise ValueError(f"TELEGRAM_BOT_TOKEN is not set in {settings_path}")
 
 selector_path = BASE_DIR / "models" / "model_selector_dt.joblib"
 config_path = BASE_DIR / "config" / "models_config.json"
 
 print(f"Loading selector from: {selector_path}")
-print(f"Loading model config from: {config_path}")
 
 user_last_photo_time = defaultdict(lambda: 0)
 PHOTO_COOLDOWN_SECONDS = 3
